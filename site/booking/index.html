@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking | USA Student Tour</title>
+  <meta name="description" content="Access the California Tours booking engine.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <a href="/"><img src="/assets/images/usa_st_logo_horiz.png" alt="USA Student Tour"></a>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav aria-label="Primary">
+      <ul id="primary-nav">
+        <li><a href="/">Home</a></li><li><a href="/student-tours-list/">Student Tours</a></li><li><a href="/educational-tours/">Educational Tours</a></li><li><a href="/student-group-travel-private-tours/">Group Travel</a></li><li><a href="/student-vacation-packages/">Vacation Packages</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact-us/">Contact</a></li><li><a href="/booking/">Book Now</a></li>
+      </ul>
+    </nav>
+    <a class="book-now" href="/booking/"><img src="/assets/images/booknow.png" alt="Book Now"></a>
+  </header>
+
+  <section class="hero" style="background-image: linear-gradient(90deg, rgba(31,115,183,0.78), rgba(31,115,183,0.55)), url('/assets/images/homegrid.png');">
+    <div class="hero-content">
+      <p class="eyebrow">USA Student Tour</p>
+      <h1>Booking engine</h1>
+      <p class="subtitle">Secure booking powered by California Tours.</p>
+      <a class="button" href="#booking">Open booking</a>
+    </div>
+  </section>
+
+  <main class="page">
+    <section class="section embed" id="booking">
+        <h2>Start your booking</h2>
+        <div class="embed-box">This placeholder represents the booking engine. Embed your booking widget or iframe here.</div>
+      </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/assets/images/usa_st_logo_horiz.png" alt="USA Student Tour" />
+        <p>California Tours company · California Seller of Travel #2065568-40-163</p>
+      </div>
+      <div class="footer-links">
+        <a href="/student-tour-reviews/">Tour Reviews</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about-us/">About Us</a>
+      </div>
+      <div class="footer-social">
+        <img src="/assets/images/socialicons.png" alt="Social icons" />
+      </div>
+      <div class="footer-seals">
+        <img src="/assets/images/trustwave.png" alt="Trusted Commerce" />
+        <img src="/assets/images/godaddy.gif" alt="SSL Secure" />
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 USA Student Tour · All rights reserved.</p>
+  </footer>
+  
+    <script>
+      (() => {
+        const mq = window.matchMedia('(max-width: 768px)');
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.querySelector('.site-header nav ul');
+        const sync = () => {
+          document.body.classList.toggle('is-mobile', mq.matches);
+          if (!mq.matches) document.body.classList.remove('nav-open');
+        };
+        mq.addEventListener('change', sync);
+        sync();
+        if (toggle && nav) {
+          toggle.addEventListener('click', () => {
+            document.body.classList.toggle('nav-open');
+          });
+        }
+      })();
+    </script>
+  
+</body>
+</html>

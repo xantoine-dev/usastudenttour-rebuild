@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New York Student Tours | USA Student Tour</title>
+  <meta name="description" content="Student tours from New York: Brooklyn Bridge, Harlem gospel, Manhattan city tours, and east coast overnights.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <a href="/"><img src="/assets/images/usa_st_logo_horiz.png" alt="USA Student Tour"></a>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav aria-label="Primary">
+      <ul id="primary-nav">
+        <li><a href="/">Home</a></li><li><a href="/student-tours-list/">Student Tours</a></li><li><a href="/educational-tours/">Educational Tours</a></li><li><a href="/student-group-travel-private-tours/">Group Travel</a></li><li><a href="/student-vacation-packages/">Vacation Packages</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact-us/">Contact</a></li><li><a href="/booking/">Book Now</a></li>
+      </ul>
+    </nav>
+    <a class="book-now" href="/booking/"><img src="/assets/images/booknow.png" alt="Book Now"></a>
+  </header>
+
+  <section class="hero" style="background-image: linear-gradient(90deg, rgba(31,115,183,0.78), rgba(31,115,183,0.55)), url('/assets/images/homegrid.png');">
+    <div class="hero-content">
+      <p class="eyebrow">USA Student Tour</p>
+      <h1>New York student tours</h1>
+      <p class="subtitle">Day trips and overnight experiences from New York: Brooklyn Bridge, Harlem gospel, Manhattan city, and more.</p>
+      <a class="button" href="#tours">See tours</a>
+    </div>
+  </section>
+
+  <main class="page">
+    <section class="section lede"><p>Famous for its towering skyscrapers, shopping districts, and food, New York is a lively departure city for students. Explore Brooklyn Bridge, Manhattan by helicopter, or quick trips to DC and Boston. Travel to San Francisco, Los Angeles, Las Vegas, and Hawaii with custom packages.</p></section>
+<section class="section notice"><p>No tours are currently scheduled. Please contact us to arrange your tour.</p></section>
+<section class="section cards" id="tours">
+        <div class="section-header"><h2>Sample tours from New York</h2></div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>48 Hours Hop On Hop Off</h3>
+            <p>Budget-friendly 2-day pass to see NYC at your pace with dozens of stops.</p>
+            <a class="link" href="/student-tours-from-new-york/new-york-48-hours-hop-on-hop-off-tour/">View tour</a>
+          </article>
+
+          <article class="card">
+            <h3>72 Hours Hop On Hop Off</h3>
+            <p>Three full days to explore NYC neighborhoods, museums, and landmarks.</p>
+            <a class="link" href="/student-tours-from-new-york/new-york-72-hours-hop-on-hop-off-tour/">View tour</a>
+          </article>
+
+          <article class="card">
+            <h3>Manhattan City Tour</h3>
+            <p>Harbor cruise, lunch in Little Italy, and walking tours of Grant's Tomb, Wall Street, Rockefeller Center.</p>
+            <a class="link" href="/student-tours-from-new-york/manhattan-city-tour/">View tour</a>
+          </article>
+
+          <article class="card">
+            <h3>Brooklyn Bridge Tour</h3>
+            <p>Guided walk across the bridge plus time in DUMBO for photos, shopping, and treats.</p>
+            <a class="link" href="/student-tours-from-new-york/brooklyn-bridge-tour/">View tour</a>
+          </article>
+
+          <article class="card">
+            <h3>Harlem Gospel Tour (Sundays)</h3>
+            <p>Harlem neighborhood walk, Apollo Theater views, and authentic church service with gospel music.</p>
+            <a class="link" href="/student-tours-from-new-york/harlem-gospel-tour/">View tour</a>
+          </article></div>
+      </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/assets/images/usa_st_logo_horiz.png" alt="USA Student Tour" />
+        <p>California Tours company · California Seller of Travel #2065568-40-163</p>
+      </div>
+      <div class="footer-links">
+        <a href="/student-tour-reviews/">Tour Reviews</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about-us/">About Us</a>
+      </div>
+      <div class="footer-social">
+        <img src="/assets/images/socialicons.png" alt="Social icons" />
+      </div>
+      <div class="footer-seals">
+        <img src="/assets/images/trustwave.png" alt="Trusted Commerce" />
+        <img src="/assets/images/godaddy.gif" alt="SSL Secure" />
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 USA Student Tour · All rights reserved.</p>
+  </footer>
+  
+    <script>
+      (() => {
+        const mq = window.matchMedia('(max-width: 768px)');
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.querySelector('.site-header nav ul');
+        const sync = () => {
+          document.body.classList.toggle('is-mobile', mq.matches);
+          if (!mq.matches) document.body.classList.remove('nav-open');
+        };
+        mq.addEventListener('change', sync);
+        sync();
+        if (toggle && nav) {
+          toggle.addEventListener('click', () => {
+            document.body.classList.toggle('nav-open');
+          });
+        }
+      })();
+    </script>
+  
+</body>
+</html>
