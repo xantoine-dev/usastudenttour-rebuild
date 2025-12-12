@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Preview | Booking Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>:root { --blue: #1f73b7; --orange: #f05a28; }</style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+  <header class="bg-[var(--blue)] text-white">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="font-semibold">Admin Preview (Demo)</div>
+      <a class="text-white/90 hover:text-white" href="/booking.html">Back</a>
+    </div>
+  </header>
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-4">
+    <h1 class="text-2xl font-bold">Recent demo bookings</h1>
+    <p class="text-slate-600 text-sm">Un-authenticated preview; demo data only.</p>
+    <div class="bg-white border border-slate-200 rounded-xl shadow overflow-hidden">
+      <table class="min-w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700">
+          <tr>
+            <th class="text-left px-4 py-2">Reference</th>
+            <th class="text-left px-4 py-2">Destination</th>
+            <th class="text-left px-4 py-2">Date</th>
+            <th class="text-left px-4 py-2">Group</th>
+            <th class="text-left px-4 py-2">Email</th>
+            <th class="text-left px-4 py-2">Created</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </main>
+  <script>
+    (function() {
+      const rows = document.getElementById('rows');
+      const data = JSON.parse(localStorage.getItem('demoBookings') || '[]');
+      const now = new Date().toLocaleString();
+      const fallback = data.length === 0 ? [{ reference: 'CT-48392', destination: 'yosemite', date: '2025-12-31', groupSize: 12, email: 'demo@example.com', created: now }] : data.map(d => ({ ...d, created: now }));
+      rows.innerHTML = fallback.map(item => `
+        <tr class="border-t border-slate-200">
+          <td class="px-4 py-2 font-semibold text-slate-800">${item.reference || '—'}</td>
+          <td class="px-4 py-2">${item.destination || '—'}</td>
+          <td class="px-4 py-2">${item.date || '—'}</td>
+          <td class="px-4 py-2">${item.groupSize || '—'}</td>
+          <td class="px-4 py-2">${item.email || '—'}</td>
+          <td class="px-4 py-2 text-slate-500">${item.created || now}</td>
+        </tr>
+      `).join('');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservation Confirmed | Booking Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>:root { --blue: #1f73b7; --orange: #f05a28; }</style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+  <header class="bg-[var(--blue)] text-white">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="font-semibold">USA Student Tour · Booking Demo</div>
+      <a class="text-white/90 hover:text-white" href="/booking.html">New booking</a>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-12 space-y-6">
+    <section class="bg-white rounded-2xl shadow border border-slate-200 p-8 space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xl">✓</div>
+        <div>
+          <p class="text-sm uppercase tracking-wide text-slate-500 font-semibold">Reservation Confirmed</p>
+          <h1 class="text-2xl font-bold" id="refText">Reference: —</h1>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4 text-slate-700" id="summary">
+        <div><p class="font-semibold">Destination</p><p id="dest">—</p></div>
+        <div><p class="font-semibold">Date</p><p id="dateVal">—</p></div>
+        <div><p class="font-semibold">Group size</p><p id="group">—</p></div>
+        <div><p class="font-semibold">Contact email</p><p id="emailVal">—</p></div>
+      </div>
+      <p class="text-slate-600">Payment and follow-up handled separately. This demo shows the booking backbone only.</p>
+      <div class="flex gap-3 pt-2">
+        <a href="/booking.html" class="inline-flex items-center gap-2 bg-[var(--orange)] text-white px-4 py-2 rounded-md font-semibold shadow">Book another</a>
+        <a href="/" class="inline-flex items-center gap-2 text-[var(--blue)] font-semibold">Back to landing</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function() {
+      const dataStr = sessionStorage.getItem('demoBooking');
+      if (!dataStr) return;
+      try {
+        const data = JSON.parse(dataStr);
+        document.getElementById('refText').textContent = `Reference: ${data.reference || '—'}`;
+        document.getElementById('dest').textContent = data.destination || '—';
+        document.getElementById('dateVal').textContent = data.date || '—';
+        document.getElementById('group').textContent = data.groupSize || '—';
+        document.getElementById('emailVal').textContent = data.email || '—';
+      } catch (e) {
+        // ignore
+      }
+    })();
+  </script>
+</body>
+</html>
