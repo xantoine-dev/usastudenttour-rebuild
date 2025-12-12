@@ -1,0 +1,10 @@
+[build]
+  command = ""
+  publish = "public"
+  functions = "netlify/functions"
+
+# ensure clean URLs
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

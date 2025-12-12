@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Engine Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --blue: #1f73b7; --orange: #f05a28; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <header class="bg-[var(--blue)] text-white">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="text-lg font-semibold">USA Student Tour · Booking Demo</div>
+      <a class="inline-flex items-center gap-2 bg-[var(--orange)] text-white px-4 py-2 rounded-md font-semibold shadow" href="/booking.html">Open Demo</a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-10">
+    <section class="space-y-3">
+      <p class="uppercase tracking-wide text-sm text-slate-500 font-semibold">Objective</p>
+      <h1 class="text-3xl font-bold">Demo Booking Engine Proposal (Netlify-Friendly)</h1>
+      <p class="text-lg text-slate-700">A clean, believable booking flow that mirrors a PHP/MySQL architecture, but runs serverlessly for demo.</p>
+    </section>
+
+    <section class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl shadow border border-slate-200 p-5 space-y-2">
+        <h2 class="font-semibold text-lg">What Bill should feel</h2>
+        <ul class="list-disc list-inside text-slate-700 space-y-1">
+          <li>Understands booking flows and ownership.</li>
+          <li>Complexity made simple.</li>
+          <li>No PCI scope; payment later.</li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-xl shadow border border-slate-200 p-5 space-y-2">
+        <h2 class="font-semibold text-lg">Stack</h2>
+        <ul class="list-disc list-inside text-slate-700 space-y-1">
+          <li>HTML + Tailwind + vanilla JS</li>
+          <li>Netlify hosting + functions (Node)</li>
+          <li>PHP parity: maps 1:1 to PHP/MySQL later</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-xl shadow border border-slate-200 p-5 space-y-4">
+      <h2 class="text-xl font-semibold">Flow you will see</h2>
+      <ol class="list-decimal list-inside space-y-2 text-slate-700">
+        <li><strong>Tour selection:</strong> destination, date, group size.</li>
+        <li><strong>Availability & pricing:</strong> calls a Netlify Function; applies group discounts; live price update.</li>
+        <li><strong>Guest info:</strong> name, contact, school/group.</li>
+        <li><strong>Confirmation:</strong> booking reference ID; email simulated.</li>
+      </ol>
+      <a class="inline-flex items-center gap-2 bg-[var(--orange)] text-white px-4 py-2 rounded-md font-semibold shadow" href="/booking.html">Launch the booking demo</a>
+    </section>
+  </main>
+</body>
+</html>
