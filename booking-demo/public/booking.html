@@ -122,10 +122,20 @@
     const stepGuest = document.getElementById('step-guest');
     const stepConfirm = document.getElementById('step-confirm');
 
+    // DOM references (avoid relying on window globals)
+    const destinationEl = document.getElementById('destination');
+    const dateEl = document.getElementById('date');
+    const groupSizeEl = document.getElementById('groupSize');
+    const nameEl = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const phoneEl = document.getElementById('phone');
+    const schoolEl = document.getElementById('school');
+    const notesEl = document.getElementById('notes');
+
     let availabilityOk = false;
     let lastQuote = null;
 
-    const requiredFields = [destination, date, groupSize, name, email];
+    const requiredFields = [destinationEl, dateEl, groupSizeEl, nameEl, emailEl];
 
     function updateSteps() {
       stepAvailability.classList.toggle('active', availabilityOk);
@@ -147,9 +157,9 @@
       updateSubmitState();
 
       const payload = {
-        destination: destination.value,
-        date: date.value,
-        groupSize: Number(groupSize.value || 1),
+        destination: destinationEl.value,
+        date: dateEl.value,
+        groupSize: Number(groupSizeEl.value || 1),
       };
       const res = await fetch('/.netlify/functions/availability', {
         method: 'POST',
@@ -178,7 +188,7 @@
 
     async function submitBooking() {
       confirmationEl.classList.add('hidden');
-      const required = [name, email, destination, date, groupSize];
+      const required = [nameEl, emailEl, destinationEl, dateEl, groupSizeEl];
       const missing = required.filter((el) => !el.value);
       if (missing.length) {
         confirmationEl.classList.remove('hidden');
@@ -195,14 +205,14 @@
         return;
       }
       const payload = {
-        name: name.value,
-        email: email.value,
-        phone: phone.value,
-        school: school.value,
-        notes: notes.value,
-        destination: destination.value,
-        date: date.value,
-        groupSize: Number(groupSize.value || 1),
+        name: nameEl.value,
+        email: emailEl.value,
+        phone: phoneEl.value,
+        school: schoolEl.value,
+        notes: notesEl.value,
+        destination: destinationEl.value,
+        date: dateEl.value,
+        groupSize: Number(groupSizeEl.value || 1),
       };
       const res = await fetch('/.netlify/functions/submitBooking', {
         method: 'POST',
