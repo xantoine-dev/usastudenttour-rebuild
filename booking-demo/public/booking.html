@@ -132,58 +132,100 @@
     const schoolEl = document.getElementById('school');
     const notesEl = document.getElementById('notes');
 
-    let availabilityOk = false;
     let lastQuote = null;
+    let availabilityGeneration = 0;
 
+    const itineraryFields = [destinationEl, dateEl, groupSizeEl];
     const requiredFields = [destinationEl, dateEl, groupSizeEl, nameEl, emailEl];
 
+    function currentItinerary() {
+      return {
+        destination: destinationEl.value,
+        date: dateEl.value,
+        groupSize: Number(groupSizeEl.value || 1),
+      };
+    }
+
+    function sameItinerary(a, b) {
+      return !!a && a.destination === b.destination && a.date === b.date && a.groupSize === b.groupSize;
+    }
+
+    function hasCurrentQuote() {
+      return sameItinerary(lastQuote, currentItinerary());
+    }
+
     function updateSteps() {
+      const availabilityOk = hasCurrentQuote();
       stepAvailability.classList.toggle('active', availabilityOk);
-      stepGuest.classList.toggle('active', availabilityOk && !!name.value && !!email.value);
+      stepGuest.classList.toggle('active', availabilityOk && !!nameEl.value && !!emailEl.value);
       stepConfirm.classList.remove('active');
     }
 
     function updateSubmitState() {
       const missing = requiredFields.some((el) => !el.value);
-      submitBtn.disabled = missing || !availabilityOk;
+      submitBtn.disabled = missing || !hasCurrentQuote();
     }
 
     requiredFields.forEach((el) => el.addEventListener('input', updateSubmitState));
 
-    async function checkAvailability() {
+    function invalidateQuote() {
+      availabilityGeneration += 1;
+      lastQuote = null;
       availabilityEl.classList.add('hidden');
-      availabilityOk = false;
       updateSteps();
       updateSubmitState();
+    }
 
-      const payload = {
-        destination: destinationEl.value,
-        date: dateEl.value,
-        groupSize: Number(groupSizeEl.value || 1),
-      };
-      const res = await fetch('/.netlify/functions/availability', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
+    itineraryFields.forEach((el) => {
+      el.addEventListener('input', invalidateQuote);
+      el.addEventListener('change', invalidateQuote);
+    });
+
+    async function checkAvailability() {
+      invalidateQuote();
+      const generation = availabilityGeneration;
+      const payload = currentItinerary();
       availabilityEl.classList.remove('hidden');
-      if (!res.ok || !data.available) {
-        availabilityEl.innerHTML = `<p class="text-red-600 font-semibold">Not available for that date. Try another.</p>`;
-        return;
+      availabilityEl.innerHTML = '<p class="text-slate-600">Checking availability…</p>';
+
+      // A field edit or a newer check supersedes this entire request, even if
+      // the user changes away and back to exactly the same itinerary.
+      const isCurrentRequest = () => {
+        if (generation !== availabilityGeneration) return false;
+        if (!sameItinerary(payload, currentItinerary())) {
+          invalidateQuote();
+          return false;
+        }
+        return true;
+      };
+
+      try {
+        const res = await fetch('/.netlify/functions/availability', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!isCurrentRequest()) return;
+        if (!res.ok || !data.available) {
+          availabilityEl.innerHTML = `<p class="text-red-600 font-semibold">Not available for that date. Try another.</p>`;
+          return;
+        }
+        lastQuote = { ...payload, pricePerPerson: data.pricePerPerson, note: data.note, remainingSeats: data.remainingSeats };
+        availabilityEl.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+            <p class="font-semibold text-slate-800">Available</p>
+          </div>
+          <p class="text-slate-700">Price per person: <strong>$${data.pricePerPerson}</strong> ${data.note ? `(${data.note})` : ''}</p>
+          <p class="text-slate-600 text-sm">Remaining seats: ${data.remainingSeats}</p>
+        `;
+        updateSteps();
+        updateSubmitState();
+      } catch (error) {
+        if (!isCurrentRequest()) return;
+        availabilityEl.innerHTML = '<p class="text-red-600 font-semibold">Unable to check availability. Please try again.</p>';
       }
-      availabilityOk = true;
-      lastQuote = { ...payload, pricePerPerson: data.pricePerPerson, note: data.note, remainingSeats: data.remainingSeats };
-      availabilityEl.innerHTML = `
-        <div class="flex items-center gap-3">
-          <div class="w-2 h-2 rounded-full bg-green-500"></div>
-          <p class="font-semibold text-slate-800">Available</p>
-        </div>
-        <p class="text-slate-700">Price per person: <strong>$${data.pricePerPerson}</strong> ${data.note ? `(${data.note})` : ''}</p>
-        <p class="text-slate-600 text-sm">Remaining seats: ${data.remainingSeats}</p>
-      `;
-      updateSteps();
-      updateSubmitState();
     }
 
     async function submitBooking() {
@@ -197,13 +239,16 @@
         confirmationEl.innerText = 'Please fill all required fields.';
         return;
       }
-      if (!availabilityOk) {
+      if (!hasCurrentQuote()) {
+        invalidateQuote();
         confirmationEl.classList.remove('hidden');
         confirmationEl.classList.remove('bg-green-50', 'border-green-200', 'text-green-800');
         confirmationEl.classList.add('bg-red-50', 'border-red-200', 'text-red-800');
         confirmationEl.innerText = 'Check availability first.';
         return;
       }
+      // Keep the submitted quote stable while the reservation is in flight.
+      const submittedQuote = lastQuote;
       const payload = {
         name: nameEl.value,
         email: emailEl.value,
@@ -238,7 +283,7 @@
         groupSize: payload.groupSize,
         email: payload.email,
         name: payload.name,
-        pricePerPerson: lastQuote?.pricePerPerson,
+        pricePerPerson: submittedQuote.pricePerPerson,
       };
       sessionStorage.setItem('demoBooking', JSON.stringify(summary));
       const existing = JSON.parse(localStorage.getItem('demoBookings') || '[]');
